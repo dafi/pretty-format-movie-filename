@@ -18,9 +18,11 @@ var list = [
 "Suits.S02E10.HDTV.x264-ASAP.[VTV].mp4",
 "Switched.at.Birth.S01E30.HDTV.x264-ASAP.mp4",
 "The.Big.Bang.Theory.S06E09.HDTV.x264-LOL.mp4",
-]
+'arrow.S01E01.mp4'
+];
 
 for (var i = 0; i < list.length; i++) {
+	console.log('Testing ' + list[i]);
 	console.log(" original '" + list[i] + "' formatted '" + prettyMovieName.format(list[i]) + "'");
 }
 
