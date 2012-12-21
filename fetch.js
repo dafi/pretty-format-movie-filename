@@ -26,7 +26,8 @@ var feeds = [
 //"http://torrentz.eu/feed?q=smash",
 "http://torrentz.eu/feed?q=the+big+bang+theory",
 //"http://torrentz.eu/feed?q=secret+state",
-"http://torrentz.eu/feed?q=whitney"
+"http://torrentz.eu/feed?q=whitney",
+"http://torrentz.eu/feed?q=nashville"
 ];
 
 var searchPaths = [
@@ -45,12 +46,22 @@ function getUrl(urlStr, callback) {
           feedXml += chunk.toString();
         });
         res.on('end', function() {
+            // get just first feed item
             var singleLine = feedXml.replace(/(\n|\r|\t)/g, '');
-            var m = singleLine.match(/<item> *<title>.*?<\/title>/g);
-            if (m) {
-                // get just first feed item
-                var fileName = m[0].match(/<title>(.*?)<\/title>/)[1];
-                callback(prettyMovieName.parse(fileName));
+            var tagItemBegin = singleLine.indexOf('<item>');
+            var tagItemEnd = singleLine.indexOf('</item>', tagItemBegin);
+
+            singleLine = singleLine.substring(tagItemBegin, tagItemEnd);
+            var title = singleLine.match(/<title>(.*?)<\/title>/);
+
+            if (title) {
+                var obj = {movie:prettyMovieName.parse(title[1])};
+
+                var link = singleLine.match(/<link>(.*?)<\/link>/);
+                if (link) {
+                    obj.link = link[1];
+                }
+                callback(obj);
             }
         });
     }).on('error', function(e) {
@@ -64,10 +75,10 @@ function addTitle(title) {
     titles.push(title);
     if (titles.length == feeds.length) {
         titles = titles.filter(function(el) {
-            return el != null;
+            return el.movie != null;
         });
         titles.sort(function(a, b) {
-            return a.showName.localeCompare(b.showName);
+            return a.movie.showName.localeCompare(b.movie.showName);
         });
         showNewTitles(titles);
     }
@@ -87,16 +98,29 @@ function searchInFolder(path, title) {
     return true;
 }
 
+function writeHTML(htmlBody) {
+    var html = '<!DOCTYPE html><html><head><title>Movies to download</title></head><body>%1</body></html>';
+
+    html = html.replace('%1', htmlBody);
+    fs.writeFileSync('./tmptest/listmovies.html', html, 'utf-8');
+}
+
 function showNewTitles(titles) {
+    var itemsNews = [];
+    var htmlLinks = '';
+
     titles.forEach(function(title) {
         var isNew = !searchPaths.some(function(searchPath) {
-            var path = searchPath.replace('%1', title.showName);
-            return searchInFolder(path, title);
+            var path = searchPath.replace('%1', title.movie.showName);
+            return searchInFolder(path, title.movie);
         });
         if (isNew) {
-            console.log(prettyMovieName.format(title) + ' is new');
+            var prettyName = prettyMovieName.format(title.movie);
+            console.log(prettyName + ' is new');
+            htmlLinks += '<a href="' + title.link + '">' + prettyName + '</a><br/>';
         }
     });
+    writeHTML(htmlLinks);
 }
 
 for (var i = 0; i < feeds.length; i++) {
