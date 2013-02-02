@@ -8,22 +8,23 @@ var feeds = [
 "http://torrentz.eu/feed?q=30+rock",
 "http://torrentz.eu/feed?q=arrow",
 "http://torrentz.eu/feed?q=beauty+and+the+beast",
+"http://torrentz.eu/feed?q=bunheads",
 // "http://torrentz.eu/feed?q=community",
 // "http://torrentz.eu/feed?q=drop+dead+diva",
 // "http://torrentz.eu/feed?q=fairly+legal",
-"http://torrentz.eu/feed?q=glee",
+// "http://torrentz.eu/feed?q=glee",
 "http://torrentz.eu/feed?q=happy+endings",
 // "http://torrentz.eu/feed?q=hunted",
-"http://torrentz.eu/feed?q=last+resort",
+// "http://torrentz.eu/feed?q=last+resort",
 "http://torrentz.eu/feed?q=mike+and+molly",
 "http://torrentz.eu/feed?q=modern+family",
 "http://torrentz.eu/feed?q=new+girl",
 "http://torrentz.eu/feed?q=person+of+interest",
 // "http://torrentz.eu/feed?q=rizzoli+%26+isles",
-// "http://torrentz.eu/feed?q=suits",
+"http://torrentz.eu/feed?q=suits",
 //"http://torrentz.eu/feed?q=revolution",
-// "http://torrentz.eu/feed?q=switched+at+birth",
-//"http://torrentz.eu/feed?q=smash",
+"http://torrentz.eu/feed?q=switched+at+birth",
+"http://torrentz.eu/feed?q=smash",
 "http://torrentz.eu/feed?q=the+big+bang+theory",
 //"http://torrentz.eu/feed?q=secret+state",
 "http://torrentz.eu/feed?q=whitney",
@@ -71,8 +72,19 @@ function getUrl(urlStr, callback) {
 
 var titles = [];
 
+// create a blank string enough long to overwrite previous output
+var blankLine = '';
+for (var i = 0; i < 60; i++) {
+    blankLine += ' ';
+}
+
 function addTitle(title) {
     titles.push(title);
+    if (title.movie) {
+        process.stdout.write(blankLine + '\r');
+        process.stdout.write(titles.length + '/' + feeds.length + ' ' + title.movie.showName + '\r');
+
+    }
     if (titles.length == feeds.length) {
         titles = titles.filter(function(el) {
             return el.movie != null;
@@ -80,6 +92,8 @@ function addTitle(title) {
         titles.sort(function(a, b) {
             return a.movie.showName.localeCompare(b.movie.showName);
         });
+        process.stdout.write(blankLine + '\r');
+        process.stdout.write('\n');
         showNewTitles(titles);
     }
 }
