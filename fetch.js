@@ -93,7 +93,6 @@ function addTitle(title) {
             return a.movie.showName.localeCompare(b.movie.showName);
         });
         process.stdout.write(blankLine + '\r');
-        process.stdout.write('\n');
         showNewTitles(titles);
     }
 }
