@@ -2,6 +2,7 @@ var url = require('url');
 var http = require('http');
 var fs = require('fs');
 var prettyMovieName = require('./prettyFormatMovieName');
+var tu = require('./torrentUtils');
 
 var feeds = [
 "http://torrentz.eu/feed?q=2+broke+girls",
@@ -9,7 +10,7 @@ var feeds = [
 "http://torrentz.eu/feed?q=arrow",
 "http://torrentz.eu/feed?q=beauty+and+the+beast",
 "http://torrentz.eu/feed?q=bunheads",
-// "http://torrentz.eu/feed?q=community",
+"http://torrentz.eu/feed?q=community",
 // "http://torrentz.eu/feed?q=drop+dead+diva",
 // "http://torrentz.eu/feed?q=fairly+legal",
 // "http://torrentz.eu/feed?q=glee",
@@ -22,13 +23,15 @@ var feeds = [
 "http://torrentz.eu/feed?q=person+of+interest",
 // "http://torrentz.eu/feed?q=rizzoli+%26+isles",
 "http://torrentz.eu/feed?q=suits",
-//"http://torrentz.eu/feed?q=revolution",
+"http://torrentz.eu/feed?q=revolution",
 "http://torrentz.eu/feed?q=switched+at+birth",
 "http://torrentz.eu/feed?q=smash",
 "http://torrentz.eu/feed?q=the+big+bang+theory",
 //"http://torrentz.eu/feed?q=secret+state",
 "http://torrentz.eu/feed?q=whitney",
-"http://torrentz.eu/feed?q=nashville"
+//"http://torrentz.eu/feed?q=nashville",
+//"http://torrentz.eu/feed?q=house+of+cards"
+"http://torrentz.eu/feed?q=the+americans"
 ];
 
 var searchPaths = [
@@ -111,8 +114,20 @@ function searchInFolder(path, title) {
     return true;
 }
 
-function writeHTML(htmlBody) {
+function writeHTML(links) {
     var html = '<!DOCTYPE html><html><head><title>Movies to download</title></head><body>%1</body></html>';
+    var htmlBody = '';
+
+    links.forEach(function(link) {
+        var torrentUrl = tu.getTorrentUrlFromFeedUrl(link.url);
+        htmlBody += '<a href="' + torrentUrl + '">' + link.label + '</a><br/>';
+
+        // download torrent file
+        var file = fs.createWriteStream('./tmptest/torrents/' + link.label + '.torrent');
+        var request = http.get(torrentUrl, function(response) {
+          response.pipe(file);
+        });
+    });
 
     html = html.replace('%1', htmlBody);
     fs.writeFileSync('./tmptest/listmovies.html', html, 'utf-8');
@@ -120,7 +135,7 @@ function writeHTML(htmlBody) {
 
 function showNewTitles(titles) {
     var itemsNews = [];
-    var htmlLinks = '';
+    var links = [];
 
     titles.forEach(function(title) {
         var isNew = !searchPaths.some(function(searchPath) {
@@ -130,10 +145,10 @@ function showNewTitles(titles) {
         if (isNew) {
             var prettyName = prettyMovieName.format(title.movie);
             console.log(prettyName + ' is new');
-            htmlLinks += '<a href="' + title.link + '">' + prettyName + '</a><br/>';
+            links.push({url:title.link, label:prettyName});
         }
     });
-    writeHTML(htmlLinks);
+    writeHTML(links);
 }
 
 for (var i = 0; i < feeds.length; i++) {
