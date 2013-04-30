@@ -1,0 +1,22 @@
+[
+{"inputValue":"30.Rock.S07E07.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"30.rock","season":7,"episode":7,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Arrow.S01E07.HDTV.x264-LOL.[VTV].mp4", "expectedResult":{"showName":"arrow","season":1,"episode":7,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Beauty.and.the.Beast.2012.S01E07.HDTV.x264-ASAP.mp4", "expectedResult":{"showName":"beauty.and.the.beast","season":1,"episode":7,"extraText":"","ext":"mp4","year":"2012"}},
+{"inputValue":"Fairly.Legal.S02E13.HDTV.x264-ASAP.mp4", "expectedResult":{"showName":"fairly.legal","season":2,"episode":13,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Glee.S04E08.HDTV.x264-LOL.[VTV].mp4", "expectedResult":{"showName":"glee","season":4,"episode":8,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Happy.Endings.S03E03.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"happy.endings","season":3,"episode":3,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Hunted.S01E08.HDTV.x264-TLA.mp4", "expectedResult":{"showName":"hunted","season":1,"episode":8,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Mike.and.Molly.S03E08.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"mike.and.molly","season":3,"episode":8,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"New.Girl.S02E09.HDTV.x264-LOL.[VTV].mp4", "expectedResult":{"showName":"new.girl","season":2,"episode":9,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Person.of.Interest.S02E08.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"person.of.interest","season":2,"episode":8,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Revolution.2012.S01E10.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"revolution","season":1,"episode":10,"extraText":"","ext":"mp4","year":"2012"}},
+{"inputValue":"Rizzoli.and.Isles.S03E11.HDTV.x264-LOL.[VTV].mp4", "expectedResult":{"showName":"rizzoli.and.isles","season":3,"episode":11,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Suits.S02E10.HDTV.x264-ASAP.[VTV].mp4", "expectedResult":{"showName":"suits","season":2,"episode":10,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Switched.at.Birth.S01E30.HDTV.x264-ASAP.mp4", "expectedResult":{"showName":"switched.at.birth","season":1,"episode":30,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"The.Big.Bang.Theory.S06E09.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"the.big.bang.theory","season":6,"episode":9,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"arrow.S01E01.mp4", "expectedResult":{"showName":"arrow","season":1,"episode":1,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"1600.Penn.S01E02.HDTV.x264-2HD.mp4", "expectedResult":{"showName":"1600.penn","season":1,"episode":2,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"2.broke.girls.221.hdtv-lol.mp4", "expectedResult":{"showName":"2.broke.girls","season":2,"episode":21,"extraText":"","ext":"mp4","year":""}},
+{"inputValue":"Smash.s02.e11.subspedia.srt", "expectedResult":{"showName":"smash","season":2,"episode":11,"extraText":"","ext":"srt","year":""}},
+{"inputValue":"The.Americans.2013.S01E11.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"the.americans","season":1,"episode":11,"extraText":"","ext":"mp4","year":"2013"}}
+]

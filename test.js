@@ -18,15 +18,46 @@ var list = [
 "Suits.S02E10.HDTV.x264-ASAP.[VTV].mp4",
 "Switched.at.Birth.S01E30.HDTV.x264-ASAP.mp4",
 "The.Big.Bang.Theory.S06E09.HDTV.x264-LOL.mp4",
-'arrow.S01E01.mp4'
+'arrow.S01E01.mp4',
+"1600.Penn.S01E02.HDTV.x264-2HD.mp4"
 ];
 
-for (var i = 0; i < list.length; i++) {
-	console.log('Testing ' + list[i]);
-	console.log(" original '" + list[i] + "' formatted '" + prettyMovieName.format(list[i]) + "'");
+function generateTestSuite() {
+	console.log('[');
+	for (var i = 0; i < list.length; i++) {
+		console.log('{"inputValue":"' + list[i] + '", "expectedResult":' + JSON.stringify(prettyMovieName.parse(list[i])) + '},');
+	}
+	console.log(']');
 }
 
-var prettyMovieName = require('./prettyFormatMovieName');
+function runTestSuite() {
+	var tests = JSON.parse(fs.readFileSync('testSuite.json', 'UTF-8'));
+
+	for (var i = 0; i < tests.length; i++) {
+		var test = tests[i];
+		var expected = test.expectedResult;
+		var result = prettyMovieName.parse(test.inputValue);
+		if (!result
+			|| result.showName != expected.showName
+			|| result.season != expected.season
+			|| result.episode != expected.episode
+			|| result.extraText != expected.extraText
+			|| result.ext != expected.ext
+			|| result.year != expected.year) {
+			console.log('Test failed for test.inputValue');
+			console.log('expected ' + JSON.stringify(expected));
+			console.log('found ' + (result ? JSON.stringify(result) : 'null'));
+		}
+	}
+}
+
+// generateTestSuite();
+runTestSuite();
+
+// for (var i = 0; i < list.length; i++) {
+// 	console.log('Testing ' + list[i]);
+// 	console.log(" original '" + list[i] + "' formatted '" + prettyMovieName.format(list[i]) + "'");
+// }
 
 if (argv.length >= 3) {
 	if (argv[2] == 'ren') {

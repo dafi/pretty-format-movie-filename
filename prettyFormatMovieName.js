@@ -10,7 +10,7 @@ exports.parse = function(fileName) {
     }
 
     // handle file name of type sDDeDD or DxXX where D = digit
-    var m = file.match(/(^.*?)s?([0-9]{1,2})[e|x]?([0-9]{2})(.*?)\.?.*(\..{3})/i);
+    var m = file.match(/(^.*?)\.s?([0-9]{1,2})\.?[e|x]?([0-9]{2})(.*?)\.?.*(\..{3})/i);
 
     if (m && m.length == 6) {
         return {
