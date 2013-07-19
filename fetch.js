@@ -76,10 +76,13 @@ function searchInFolder(path, title) {
     if (fs.existsSync(path)) {
         return fs.readdirSync(path).some(function(el) {
             var parsed = prettyMovieName.parse(el);
-            return parsed
-                && title.showName == parsed.showName
-                && title.season == parsed.season 
-                && title.episode == parsed.episode;
+            if (parsed && title.showName == parsed.showName) {
+                if (title.season < parsed.season) {
+                    return false;
+                }
+                return title.episode <= parsed.episode;
+            }
+            return false;
         });
     }
     // if path doesn't exist ignore it
