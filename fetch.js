@@ -3,8 +3,11 @@ var http = require('http');
 var fs = require('fs');
 var prettyMovieName = require('./prettyFormatMovieName');
 var tu = require('./torrentUtils');
+var argv = process.argv;
 
-var feeds = JSON.parse(fs.readFileSync('feeds.json', 'UTF-8'));
+var scriptDir = argv[1].substring(0, argv[1].lastIndexOf('/') + 1);
+
+var feeds = JSON.parse(fs.readFileSync(scriptDir + 'feeds.json', 'UTF-8'));
 
 var searchPaths = [
 '/Volumes/PlugDisk/mm/movies/%1',
@@ -98,14 +101,14 @@ function writeHTML(links) {
         htmlBody += '<a href="' + torrentUrl + '">' + link.label + '</a><br/>';
 
         // download torrent file
-        var file = fs.createWriteStream('./tmptest/torrents/' + link.label + '.torrent');
+        var file = fs.createWriteStream(scriptDir + '/tmptest/torrents/' + link.label + '.torrent');
         var request = http.get(torrentUrl, function(response) {
           response.pipe(file);
         });
     });
 
     html = html.replace('%1', htmlBody);
-    fs.writeFileSync('./tmptest/listmovies.html', html, 'utf-8');
+    fs.writeFileSync(scriptDir + '/tmptest/listmovies.html', html, 'utf-8');
 }
 
 function showNewTitles(titles) {
