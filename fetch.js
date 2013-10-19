@@ -1,8 +1,8 @@
 var url = require('url');
-var http = require('http');
 var fs = require('fs');
 var prettyMovieName = require('./prettyFormatMovieName');
 var tu = require('./torrentUtils');
+var child_process = require('child_process');
 var argv = process.argv;
 
 var scriptDir = argv[1].substring(0, argv[1].lastIndexOf('/') + 1);
@@ -15,37 +15,27 @@ var searchPaths = [
 ];
 
 function getUrl(urlStr, callback) {
-    var options = url.parse(urlStr);
-    // http.get needs 'path' to work
-    options.path = options.pathname + options.search;
-    
-    var feedXml = '';
-    http.get(options, function(res) {
-        res.on("data", function(chunk) {
-          feedXml += chunk.toString();
-        });
-        res.on('end', function() {
-            // get just first feed item
-            var singleLine = feedXml.replace(/(\n|\r|\t)/g, '');
-            var tagItemBegin = singleLine.indexOf('<item>');
-            var tagItemEnd = singleLine.indexOf('</item>', tagItemBegin);
+    child_process.execFile('curl', [urlStr], {}, function(error, stdout, stderr) {
+        var feedXml = stdout;
 
-            singleLine = singleLine.substring(tagItemBegin, tagItemEnd);
-            var title = singleLine.match(/<title>(.*?)<\/title>/);
+        // get just first feed item
+        var singleLine = feedXml.replace(/(\n|\r|\t)/g, '');
+        var tagItemBegin = singleLine.indexOf('<item>');
+        var tagItemEnd = singleLine.indexOf('</item>', tagItemBegin);
 
-            if (title) {
-                var obj = {movie:prettyMovieName.parse(title[1])};
+        singleLine = singleLine.substring(tagItemBegin, tagItemEnd);
+        var title = singleLine.match(/<title>(.*?)<\/title>/);
 
-                var link = singleLine.match(/<link>(.*?)<\/link>/);
-                if (link) {
-                    obj.link = link[1];
-                }
-                callback(obj);
+        if (title) {
+            var obj = {movie:prettyMovieName.parse(title[1])};
+
+            var link = singleLine.match(/<link>(.*?)<\/link>/);
+            if (link) {
+                obj.link = link[1];
             }
-        });
-    }).on('error', function(e) {
-      console.log("Got error: " + e.message);
-    });
+            callback(obj);
+        }
+    })
 }
 
 var titles = [];
@@ -101,10 +91,8 @@ function writeHTML(links) {
         htmlBody += '<a href="' + torrentUrl + '">' + link.label + '</a><br/>';
 
         // download torrent file
-        var file = fs.createWriteStream(scriptDir + '/tmptest/torrents/' + link.label + '.torrent');
-        var request = http.get(torrentUrl, function(response) {
-          response.pipe(file);
-        });
+        var fullDestPath = scriptDir + '/tmptest/torrents/' + link.label + '.torrent';
+        child_process.execFile('curl', ['-o', fullDestPath, torrentUrl], {}, null);
     });
 
     html = html.replace('%1', htmlBody);

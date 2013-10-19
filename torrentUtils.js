@@ -23,10 +23,10 @@ var torrentInfo = [
 	re:/href="http:\/\/www.torrentfunk.com\/torrent\/([0-9]+)\/.*?"/,
 	urlPattern:'http://www.torrentfunk.com/tor/$1.torrent'
 	},
-/*	{
+	{
 	re:/href="http:\/\/www\.bt-chat\.com\/details\.php\?id=([0-9]+).*?"/,
 	urlPattern:'http://www.bt-chat.com/download.php?id=$1'
-	},*/
+	},
 ];
 
 exports.getTorrentUrlFromFeedUrl = function(feedUrl) {
