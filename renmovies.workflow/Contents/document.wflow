@@ -344,8 +344,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>/usr/local/bin/node /opt/devel/0dafiprj/svn/git.github/pretty-format-movie-filename/renmovies.js "$1"
-echo &gt;/Users/dave/trash/00aaaa.log $PWD</string>
+					<string>/usr/local/bin/node /opt/devel/0dafiprj/svn/git.github/pretty-format-movie-filename/renmovies.js "$1" &gt;/Users/dave/trash/renmovies.log</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -468,21 +467,21 @@ echo &gt;/Users/dave/trash/00aaaa.log $PWD</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>5151F0AC-B5FF-4B79-94F3-673B459A8627</key>
+		<key>14DE24DA-610F-4FC6-9E02-49AE10F257B3</key>
 		<dict>
 			<key>from</key>
 			<string>14461489-9DEB-4486-93AF-A13425879A9D - 14461489-9DEB-4486-93AF-A13425879A9D</string>
 			<key>to</key>
 			<string>59C1BCCB-BA2E-4435-BF87-55C855DD509C - 59C1BCCB-BA2E-4435-BF87-55C855DD509C</string>
 		</dict>
-		<key>70FEEA23-C195-4390-B373-A15484DDE3E2</key>
+		<key>7ED51737-D0EF-49C6-BBA4-685888B285C3</key>
 		<dict>
 			<key>from</key>
 			<string>59C1BCCB-BA2E-4435-BF87-55C855DD509C - 59C1BCCB-BA2E-4435-BF87-55C855DD509C</string>
 			<key>to</key>
 			<string>9AF26D0A-5527-4D01-BE46-BF1A297B6838 - 9AF26D0A-5527-4D01-BE46-BF1A297B6838</string>
 		</dict>
-		<key>E52A0107-093A-4B5D-95A9-90B4B8EFACED</key>
+		<key>E0F388C4-4430-4EF8-9541-2566134B40DC</key>
 		<dict>
 			<key>from</key>
 			<string>76D87873-C55D-4274-BA47-61578E2D706F - 76D87873-C55D-4274-BA47-61578E2D706F</string>
