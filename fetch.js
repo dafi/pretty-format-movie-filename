@@ -3,16 +3,18 @@ var fs = require('fs');
 var prettyMovieName = require('./prettyFormatMovieName');
 var tu = require('./torrentUtils');
 var child_process = require('child_process');
+var pathMod = require('path');
 var argv = process.argv;
 
-var scriptDir = argv[1].substring(0, argv[1].lastIndexOf('/') + 1);
+var scriptDir = argv[1].substring(0, argv[1].lastIndexOf(pathMod.sep) + 1);
 
-var feeds = JSON.parse(fs.readFileSync(scriptDir + 'feeds.json', 'UTF-8'));
+var config = JSON.parse(fs.readFileSync(scriptDir + 'feeds.json', 'UTF-8'));
+var feeds = config.feeds;
+var searchPaths = config.searchPaths;
+var outputPath = getOutputPath();
 
-var searchPaths = [
-'/Volumes/PlugDisk/mm/movies/%1',
-'/Volumes/PlugDisk/mm/movies/temp'
-];
+var torrentsOutputPath = pathMod.join(outputPath, 'torrents');
+var reportOutputPath = pathMod.join(outputPath, 'listmovies.html');
 
 function getUrl(urlStr, callback) {
     child_process.execFile('curl', [urlStr], {}, function(error, stdout, stderr) {
@@ -91,12 +93,12 @@ function writeHTML(links) {
         htmlBody += '<a href="' + torrentUrl + '">' + link.label + '</a><br/>';
 
         // download torrent file
-        var fullDestPath = scriptDir + '/tmptest/torrents/' + link.label + '.torrent';
+        var fullDestPath = pathMod.join(torrentsOutputPath, link.label + '.torrent');
         child_process.execFile('curl', ['-o', fullDestPath, torrentUrl], {}, null);
     });
 
     html = html.replace('%1', htmlBody);
-    fs.writeFileSync(scriptDir + '/tmptest/listmovies.html', html, 'utf-8');
+    fs.writeFileSync(reportOutputPath, html, 'utf-8');
 }
 
 function showNewTitles(titles) {
@@ -117,6 +119,44 @@ function showNewTitles(titles) {
     writeHTML(links);
 }
 
+function mkdirp(fs, path, mode) {
+    mode = typeof(mode) == 'undefined' ? 0777 : mode;
+    var parent = '';
+    path = pathMod.normalize(path);
+
+    // remove the last separator
+    path = path.replace(/[\/\\]$/, '');
+
+    path.split(pathMod.sep).forEach(function(p) {
+        parent += p + pathMod.sep;
+        if (!fs.existsSync(parent)) {
+            fs.mkdirSync(parent, mode);
+        }
+    })
+}
+
+function getOutputPath() {
+    if (typeof(config.outputPath) == 'undefined') {
+        return pathMod.join(scriptDir, 'tmptest');
+    }
+
+    // check if absolute path
+    if (config.outputPath.charAt(0) == pathMod.sep) {
+        return config.outputPath;
+    }
+
+    return pathMod.join(scriptDir, config.outputPath);
+}
+
+if (!fs.existsSync(outputPath)) {
+    mkdirp(fs, outputPath);
+}
+
+if (!fs.existsSync(torrentsOutputPath)) {
+    mkdirp(fs, torrentsOutputPath);
+}
+
 for (var i = 0; i < feeds.length; i++) {
     getUrl(feeds[i], addTitle);
 }
+

@@ -1,0 +1,11 @@
+{
+	"outputPath":"tmptest",
+	"searchPaths":[
+		"/opt/devel/movies/%1",
+		"/opt/devel/movies/temp"
+	],
+	"feeds":[
+	"http://torrentz.eu/feed?q=tvserie+name",
+	"http://torrentz.eu/feed?q=another+tvserie+name"
+	]
+}
