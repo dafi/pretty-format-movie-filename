@@ -16,6 +16,10 @@ var outputPath = getOutputPath();
 var torrentsOutputPath = pathMod.join(outputPath, 'torrents');
 var reportOutputPath = pathMod.join(outputPath, 'listmovies.html');
 
+// files ending with these extensions will be not considered movies
+// and will not be used to check if movies must be downloaded
+var excludeExts = ['.zip', '.srt'];
+
 function getUrl(urlStr, callback) {
     child_process.execFile('curl', [urlStr], {}, function(error, stdout, stderr) {
         var feedXml = stdout;
@@ -67,9 +71,20 @@ function addTitle(title) {
     }
 }
 
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 function searchInFolder(path, title) {
     if (fs.existsSync(path)) {
         return fs.readdirSync(path).some(function(el) {
+            var skipFile = excludeExts.some(function(ext) {
+                return endsWith(el, ext);
+            });
+            if (skipFile) {
+                return false;
+            }
+
             var parsed = prettyMovieName.parse(el);
             if (parsed && title.showName == parsed.showName) {
                 if (title.season < parsed.season) {
