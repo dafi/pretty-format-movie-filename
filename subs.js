@@ -8,7 +8,7 @@ var zlib = require('zlib');
 var scriptDir = argv[1].substring(0, argv[1].lastIndexOf(pathMod.sep) + 1);
 
 var config = JSON.parse(fs.readFileSync(scriptDir + 'subs.json', 'UTF-8'));
-var feeds = config.feeds;
+var feedData  = config.feedData;
 var searchPaths = config.searchPaths;
 var outputPath = getOutputPath();
 
@@ -44,20 +44,34 @@ function searchInFolder(path, title) {
     return true;
 }
 
-function getSubs(urlStr) {
-    child_process.execFile('curl', [urlStr], {}, function(error, stdout, stderr) {
+//  {"url":"http://subspedia.weebly.com/1/feed", "urlWrapperRE":"href=.http:.*?zip", "downloadUrlRE":"(http.*zip?)", "nameRE":"\/(?!.*\/)(.*)"}
+
+function getSubs(feed) {
+    var urlWrapperRE = new RegExp(feed.urlWrapperRE, 'g');
+    var downloadUrlRE = new RegExp(feed.downloadUrlRE);
+    var nameRE = new RegExp(feed.nameRE);
+
+    child_process.execFile('curl', [feed.url], {}, function(error, stdout, stderr) {
 	    var itemsNews = [];
 	    var titles = [];
 	    var links = [];
 
-		stdout.match(/href=.http.*?zip/g).forEach(function(href) {
-			var link = href.match(/(http.*zip?)/);
-			if (link) {
-				var url = link[1];
-				var idx = url.lastIndexOf('/');
-				if (idx > 0) {
-	            	var movie = prettyMovieName.parse(url.substring(idx + 1));
-					titles.push({link:url, movie:movie});
+		stdout.match(urlWrapperRE).forEach(function(urlWrapper) {
+//            var link = href.match(/(http.*zip?)/);
+            var url = urlWrapper.match(downloadUrlRE);
+			if (url) {
+				url = url[1];
+                console.log('url ---> ', url);
+                var name = url.match(nameRE);
+                if (name) {
+                    name = name[1];
+                console.log('name ---> ', name);
+	            	var movie = prettyMovieName.parse(name);
+                    if (movie) {
+					   titles.push({link:url, movie:movie});
+                    } else {
+                        console.error('** Unable to parse ' + name);
+                    }
 				}
 			}
 		});
@@ -97,6 +111,6 @@ function getOutputPath() {
     return pathMod.join(scriptDir, config.outputPath);
 }
 
-feeds.forEach(function(feed) {
+feedData.forEach(function(feed) {
 	getSubs(feed);
 });
