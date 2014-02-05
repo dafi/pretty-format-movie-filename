@@ -86,7 +86,8 @@ function searchInFolder(path, title) {
             }
 
             var parsed = prettyMovieName.parse(el);
-            if (parsed && title.showName == parsed.showName) {
+            // compare showName removing all not alphanumeric characters
+            if (parsed && title.showName.replace(/[^a-zA-Z0-9]/gi, '') == parsed.showName.replace(/[^a-zA-Z0-9]/gi, '')) {
                 if (title.season < parsed.season) {
                     return false;
                 }
