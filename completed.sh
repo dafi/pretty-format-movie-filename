@@ -10,7 +10,7 @@ if [ "$TR_TORRENT_DIR" != "" ] ; then
 	/usr/local/bin/node `dirname $0`/renmovies.js "$TR_TORRENT_DIR/$TR_TORRENT_NAME" >>$LOG_FILE 2>&1
 	if [ -d "$TR_TORRENT_DIR/$TR_TORRENT_NAME" ]
 	then
-		found=`find "$TR_TORRENT_DIR/$TR_TORRENT_NAME" -maxdepth 1 -type f -name "*.mp4"`
+		found=`find "$TR_TORRENT_DIR/$TR_TORRENT_NAME" -maxdepth 1 -type f -name "*.mp4" -o -name "*.avi"`
 		if [ -n "$found" ]
 		then
 			mv "$TR_TORRENT_DIR/$TR_TORRENT_NAME"/*.mp4 "$TR_TORRENT_DIR"
