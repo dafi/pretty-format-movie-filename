@@ -13,7 +13,7 @@ if [ "$TR_TORRENT_DIR" != "" ] ; then
 		found=`find "$TR_TORRENT_DIR/$TR_TORRENT_NAME" -maxdepth 1 -type f -name "*.mp4" -o -name "*.avi"`
 		if [ -n "$found" ]
 		then
-			mv "$TR_TORRENT_DIR/$TR_TORRENT_NAME"/*.mp4 "$TR_TORRENT_DIR"
+			mv "$found" "$TR_TORRENT_DIR"
 			osascript -e "tell application \"Finder\" to delete POSIX file \"$TR_TORRENT_DIR/$TR_TORRENT_NAME\"" &>/dev/null
 		fi		
 	fi
