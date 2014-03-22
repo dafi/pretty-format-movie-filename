@@ -15,7 +15,8 @@ var tvSeries = config.tvSeries;
 var outputPath = common.getOutputPath(scriptDir, config);
 
 var subsList = [
-        {feedUrl:'http://subspedia.weebly.com/1/feed', titleParser:subspedia}
+        {feedUrl:'http://subspedia.weebly.com/1/feed', titleParser:subspedia},
+        {feedUrl:'http://subsfactory.it/subtitle/rss.php?', titleParser:subsfactory}
         ];
 
 var excludeExts = ['.mp4', '.avi'];
@@ -57,6 +58,40 @@ function subspedia(xml) {
                             }
                         });
                     }
+                }
+            }
+        });
+    });
+}
+
+function subsfactory(xml) {
+    parseString(xml, function (err, result) {
+        result.rss.channel[0].item.forEach(function(item) {
+            var title = item.title[0];
+
+            // console.log('item ', item);
+            var movieName = prettyMovieName.parse(title);
+
+            if (movieName) {
+                var showName = movieName.showName.toLowerCase();
+                var isNew = !searchPaths.some(function(searchPath) {
+                    var path = searchPath.replace('%1', movieName.showName);
+                    return common.searchInFolder(path, movieName, excludeExts);
+                });
+
+                if (isNew) {
+                    var url = item.link[0];
+                    // console.log(fileName, '--> name = ', movieName);
+                    tvSeries.forEach(function(tvSerie) {
+                        if (tvSerie.toLowerCase() == showName) {
+                            console.log('downloading ' + title);
+                            url = url.replace('action=view', 'action=downloadfile');
+                            var fullDestPath = pathMod.join(outputPath, 'subfactory');
+                            child_process.execFile('curl', ['-o', fullDestPath, url], {}, function(error, stdout, stderr) {
+                                common.unzipAndPrettify(fullDestPath, outputPath, true);
+                            });
+                        }
+                    });
                 }
             }
         });
