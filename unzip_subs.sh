@@ -1,4 +1,4 @@
-ZIP_DIR=`cat subs.json | json_pp | grep outputPath | awk 'BEGIN {FS=":"} {print $2}'`
+ZIP_DIR=`cat subs.json | json_pp | grep outputPath | sed 's/"//g' | awk 'BEGIN {FS=":"} {print $2}'`
 
 for i in $ZIP_DIR/*.zip
 do
