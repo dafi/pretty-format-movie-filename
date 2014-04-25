@@ -35,28 +35,33 @@ function subspedia(xml) {
                 if (index > 0) {
                     var fileName = url.substr(index + 1);
                     var movieName = prettyMovieName.parse(fileName);
-                    var showName = movieName.showName.toLowerCase();
+                    if (movieName) {
+                        var showName = movieName.showName.toLowerCase();
 
-                    var isNew = !searchPaths.some(function(searchPath) {
-                        var path = searchPath.replace('%1', movieName.showName);
-                        return common.searchInFolder(path, movieName, excludeExts);
-                    });
-
-                    if (isNew) {
-                        // console.log(fileName, '--> name = ', movieName);
-                        tvSeries.forEach(function(tvSerie) {
-                            if (tvSerie.toLowerCase() == showName) {
-                                if (url.indexOf('http://www.weebly.com') == 0) {
-                                    console.log('Fixed invalid url ' + url);
-                                    url = url.substr('http://www.weebly.com'.length);
-                                }
-                                console.log('downloading ' + title);
-                                var fullDestPath = pathMod.join(outputPath, fileName);
-                                child_process.execFile('curl', ['-o', fullDestPath, url], {}, function(error, stdout, stderr) {
-                                    common.unzipAndPrettify(fullDestPath, outputPath, true);
-                                });
-                            }
+                        var isNew = !searchPaths.some(function(searchPath) {
+                            var path = searchPath.replace('%1', movieName.showName);
+                            return common.searchInFolder(path, movieName, excludeExts);
                         });
+
+                        if (isNew) {
+                            // console.log(fileName, '--> name = ', movieName);
+                            tvSeries.forEach(function(tvSerie) {
+                                // console.log('tvSerie ' + tvSerie)
+                                if (tvSerie.toLowerCase() == showName) {
+                                    if (url.indexOf('http://www.weebly.com') == 0) {
+                                        console.log('Fixed invalid url ' + url);
+                                        url = url.substr('http://www.weebly.com'.length);
+                                    }
+                                    console.log('downloading ' + title);
+                                    var fullDestPath = pathMod.join(outputPath, fileName);
+                                    child_process.execFile('curl', ['-o', fullDestPath, url], {}, function(error, stdout, stderr) {
+                                        common.unzipAndPrettify(fullDestPath, outputPath, true);
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        console.log('Unable to parse ', fileName);
                     }
                 }
             }
