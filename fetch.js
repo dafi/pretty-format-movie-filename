@@ -110,7 +110,7 @@ function writeHTML(links) {
 
         // download torrent file
         var fullDestPath = pathMod.join(torrentsOutputPath, link.label + '.torrent');
-        child_process.execFile('curl', ['-o', fullDestPath, torrentUrl], {}, null);
+        child_process.execFile('curl', ['-L', '-o', fullDestPath, torrentUrl], {}, null);
     });
 
     html = html.replace('%1', htmlBody);

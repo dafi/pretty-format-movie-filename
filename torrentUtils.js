@@ -15,6 +15,11 @@ var torrentInfo = [
 	},
 
 	{
+	re:/http:\/\/www.newtorrents.info\/torrent\/([0-9]+)\/*/,
+	urlPattern:'http://www.newtorrents.info/down.php?id=$1'
+	},
+
+	{
 	re:/href="http:\/\/h33t.com\/torrent\/([0-9]+)\/.*?"/,
 	urlPattern:'http://h33t.com/get/$1'
 	},
@@ -23,6 +28,7 @@ var torrentInfo = [
 	re:/href="http:\/\/www.torrentfunk.com\/torrent\/([0-9]+)\/.*?"/,
 	urlPattern:'http://www.torrentfunk.com/tor/$1.torrent'
 	},
+
 	{
 	re:/href="http:\/\/www\.bt-chat\.com\/details\.php\?id=([0-9]+).*?"/,
 	urlPattern:'http://www.bt-chat.com/download.php?id=$1'
