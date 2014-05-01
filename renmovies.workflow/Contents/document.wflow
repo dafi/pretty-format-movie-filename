@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>346</string>
+	<string>381</string>
 	<key>AMApplicationVersion</key>
-	<string>2.3</string>
+	<string>2.4</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -180,9 +180,9 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>328.500000:493.000000</string>
+				<string>450.000000:492.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Italian.lproj/main.nib</string>
+				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -288,9 +288,9 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>328.500000:388.000000</string>
+				<string>450.000000:388.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Italian.lproj/main.nib</string>
+				<string>/System/Library/Automator/Get Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -344,7 +344,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>/usr/local/bin/node /opt/devel/0dafiprj/svn/git.github/pretty-format-movie-filename/renmovies.js "$1" &gt;/Users/dave/trash/renmovies.log</string>
+					<string>/usr/local/bin/node /opt/devel/0dafiprj/git.github/pretty-format-movie-filename/renmovies.js "$1" &gt;/Volumes/Seneca/mm/movies/temp/.torrent_fetch/renmovies.log</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -457,7 +457,7 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>328.500000:285.000000</string>
+				<string>450.000000:285.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Italian.lproj/main.nib</string>
 			</dict>
@@ -467,26 +467,26 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>14DE24DA-610F-4FC6-9E02-49AE10F257B3</key>
+		<key>1FDC1924-A4E2-4D8C-A3D8-30ED25FD2A90</key>
 		<dict>
 			<key>from</key>
-			<string>14461489-9DEB-4486-93AF-A13425879A9D - 14461489-9DEB-4486-93AF-A13425879A9D</string>
+			<string>76D87873-C55D-4274-BA47-61578E2D706F - 76D87873-C55D-4274-BA47-61578E2D706F</string>
 			<key>to</key>
-			<string>59C1BCCB-BA2E-4435-BF87-55C855DD509C - 59C1BCCB-BA2E-4435-BF87-55C855DD509C</string>
+			<string>14461489-9DEB-4486-93AF-A13425879A9D - 14461489-9DEB-4486-93AF-A13425879A9D</string>
 		</dict>
-		<key>7ED51737-D0EF-49C6-BBA4-685888B285C3</key>
+		<key>9C177F0C-E478-4858-B627-70C60B9E28EA</key>
 		<dict>
 			<key>from</key>
 			<string>59C1BCCB-BA2E-4435-BF87-55C855DD509C - 59C1BCCB-BA2E-4435-BF87-55C855DD509C</string>
 			<key>to</key>
 			<string>9AF26D0A-5527-4D01-BE46-BF1A297B6838 - 9AF26D0A-5527-4D01-BE46-BF1A297B6838</string>
 		</dict>
-		<key>E0F388C4-4430-4EF8-9541-2566134B40DC</key>
+		<key>EDA4C5F7-9C1A-458A-A9BA-ABB35B8EB575</key>
 		<dict>
 			<key>from</key>
-			<string>76D87873-C55D-4274-BA47-61578E2D706F - 76D87873-C55D-4274-BA47-61578E2D706F</string>
-			<key>to</key>
 			<string>14461489-9DEB-4486-93AF-A13425879A9D - 14461489-9DEB-4486-93AF-A13425879A9D</string>
+			<key>to</key>
+			<string>59C1BCCB-BA2E-4435-BF87-55C855DD509C - 59C1BCCB-BA2E-4435-BF87-55C855DD509C</string>
 		</dict>
 	</dict>
 	<key>variables</key>
