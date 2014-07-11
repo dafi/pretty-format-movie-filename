@@ -9,5 +9,5 @@ done
 
 for i in $ZIP_DIR/*.srt
 do
-	node $DIR_NAME/renmovies.js $i
+	node $DIR_NAME/renmovies.js "$i"
 done
