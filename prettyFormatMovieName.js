@@ -14,7 +14,7 @@ exports.parse = function(fileName) {
 
     if (m && m.length == 6) {
         return {
-            showName: m[1].replace(/\.+$/, ''),
+            showName: m[1].replace(/[^a-z0-9]+$/, ''),
             season: parseInt(m[2], 10),
             episode: parseInt(m[3], 10),
             extraText: m[4],
