@@ -1,4 +1,5 @@
 [
+{"inputValue":"Suits - 04x10 - This is Rome.KILLERS.Italian.C.updated.Addic7ed.com", "expectedResult":{"showName":"suits","season":4,"episode":10,"extraText":"","ext":"com","year":""}},
 {"inputValue":"30.Rock.S07E07.HDTV.x264-LOL.mp4", "expectedResult":{"showName":"30.rock","season":7,"episode":7,"extraText":"","ext":"mp4","year":""}},
 {"inputValue":"Arrow.S01E07.HDTV.x264-LOL.[VTV].mp4", "expectedResult":{"showName":"arrow","season":1,"episode":7,"extraText":"","ext":"mp4","year":""}},
 {"inputValue":"Beauty.and.the.Beast.2012.S01E07.HDTV.x264-ASAP.mp4", "expectedResult":{"showName":"beauty.and.the.beast","season":1,"episode":7,"extraText":"","ext":"mp4","year":"2012"}},
